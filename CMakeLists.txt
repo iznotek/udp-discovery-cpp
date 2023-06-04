@@ -19,16 +19,14 @@ set(LIB_HEADERS
 
 add_library(udp-discovery STATIC ${LIB_SOURCES} ${LIB_HEADERS})
 set_property(TARGET udp-discovery PROPERTY CXX_STANDARD 98)
-set_target_properties(udp-discovery PROPERTIES PUBLIC_HEADER ${LIB_HEADERS})
 
 if(UNIX)
 	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pthread")
 endif()
 
 include(GNUInstallDirs)
-install(TARGETS udp-discovery
-        PUBLIC_HEADER
-          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+install(FILES ${LIB_HEADERS}
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 install(TARGETS udp-discovery
         LIBRARY DESTINATION lib)
