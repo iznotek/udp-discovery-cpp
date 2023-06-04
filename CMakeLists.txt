@@ -19,10 +19,19 @@ set(LIB_HEADERS
 
 add_library(udp-discovery STATIC ${LIB_SOURCES} ${LIB_HEADERS})
 set_property(TARGET udp-discovery PROPERTY CXX_STANDARD 98)
+set_target_properties(udp-discovery PROPERTIES PUBLIC_HEADER ${LIB_HEADERS})
 
 if(UNIX)
 	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pthread")
 endif()
+
+include(GNUInstallDirs)
+install(TARGETS udp-discovery
+        PUBLIC_HEADER
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+install(TARGETS udp-discovery
+        LIBRARY DESTINATION lib)
 
 if(BUILD_EXAMPLE)
 	set(DISCOVERY_EXAMPLE_SOURCES discovery_example.cpp)
@@ -40,6 +49,9 @@ if(BUILD_EXAMPLE)
 	add_executable(udp-discovery-example ${DISCOVERY_EXAMPLE_SOURCES})
 	target_link_libraries(udp-discovery-example ${DISCOVERY_EXAMPLE_LIBS})
 	set_property(TARGET udp-discovery-example PROPERTY CXX_STANDARD 98)
+
+	install(TARGETS udp-discovery-example
+		RUNTIME DESTINATION bin)
 endif()
 
 if(BUILD_TOOL)
@@ -54,6 +66,9 @@ if(BUILD_TOOL)
 	add_executable(udp-discovery-tool ${DISCOVERY_TOOL_SOURCES})
 	target_link_libraries(udp-discovery-tool ${DISCOVERY_TOOL_LIBS})
 	set_property(TARGET udp-discovery-example PROPERTY CXX_STANDARD 98)
+
+	install(TARGETS udp-discovery-tool
+		RUNTIME DESTINATION bin)
 endif()
 
 if(BUILD_TEST)
@@ -66,4 +81,9 @@ if(BUILD_TEST)
 	add_executable(udp-discovery-peer-e2e-test udp_discovery_protocol.cpp udp_discovery_peer.cpp udp_discovery_peer_e2e_test.cpp)
 	set_property(TARGET udp-discovery-peer-e2e-test PROPERTY CXX_STANDARD 98)
 	add_test(udp-discovery-peer-e2e-test udp-discovery-peer-e2e-test)
+
+	install(TARGETS udp-discovery-protocol-test udp-discovery-peer-e2e-test
+		RUNTIME DESTINATION bin)
 endif()
+
+
