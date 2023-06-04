@@ -14,6 +14,7 @@ set(LIB_HEADERS
 	udp_discovery_ip_port.hpp
 	udp_discovery_peer.hpp
 	udp_discovery_peer_parameters.hpp
+	udp_discovery_discovered_peer.hpp
 	udp_discovery_protocol.hpp
 	udp_discovery_protocol_version.hpp)
 
