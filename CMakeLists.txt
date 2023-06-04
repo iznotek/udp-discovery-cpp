@@ -62,6 +62,10 @@ if(BUILD_TOOL)
 	elseif(UNIX)
 		set(DISCOVERY_TOOL_LIBS ${DISCOVERY_TOOL_LIBS} rt)
 	endif()
+	
+	if(WIN32)
+		set(DISCOVERY_TOOL_LIBS ${DISCOVERY_TOOL_LIBS} Ws2_32)
+	endif(WIN32)
 
 	add_executable(udp-discovery-tool ${DISCOVERY_TOOL_SOURCES})
 	target_link_libraries(udp-discovery-tool ${DISCOVERY_TOOL_LIBS})
